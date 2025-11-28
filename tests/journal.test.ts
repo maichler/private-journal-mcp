@@ -5,7 +5,7 @@
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import * as os from 'os';
-import { JournalManager } from '../src/journal';
+import { JournalManager } from '../src/journal.js';
 
 function getFormattedDate(date: Date): string {
   const year = date.getFullYear();

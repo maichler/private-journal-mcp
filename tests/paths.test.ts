@@ -1,8 +1,9 @@
 // ABOUTME: Unit tests for path resolution utilities
 // ABOUTME: Tests cross-platform fallback logic and environment handling
 
+import { jest } from '@jest/globals';
 import * as path from 'path';
-import { resolveJournalPath, resolveUserJournalPath, resolveProjectJournalPath } from '../src/paths';
+import { resolveJournalPath, resolveUserJournalPath, resolveProjectJournalPath } from '../src/paths.js';
 
 describe('Path resolution utilities', () => {
   let originalEnv: NodeJS.ProcessEnv;

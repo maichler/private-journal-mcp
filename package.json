@@ -1,6 +1,7 @@
 {
   "name": "private-journal-mcp",
   "version": "1.0.0",
+  "type": "module",
   "description": "A lightweight MCP server that provides Claude with a private journaling capability to process feelings and thoughts",
   "main": "dist/index.js",
   "bin": {
@@ -11,8 +12,8 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "start": "node dist/index.js",
-    "test": "jest",
-    "test:watch": "jest --watch",
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
+    "test:watch": "NODE_OPTIONS='--experimental-vm-modules' jest --watch",
     "lint": "eslint src/**/*.ts",
     "format": "prettier --write src/**/*.ts"
   },
