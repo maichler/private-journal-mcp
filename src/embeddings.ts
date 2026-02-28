@@ -1,9 +1,9 @@
 // ABOUTME: Local embedding service using transformers for semantic journal search
 // ABOUTME: Provides text embedding generation and similarity computation utilities
 
-import { pipeline, FeatureExtractionPipeline } from '@xenova/transformers';
-import * as fs from 'fs/promises';
-import * as path from 'path';
+import * as fs from 'node:fs/promises';
+import * as path from 'node:path';
+import { type FeatureExtractionPipeline, pipeline } from '@xenova/transformers';
 
 export interface EmbeddingData {
   embedding: number[];
@@ -95,12 +95,12 @@ export class EmbeddingService {
 
   async loadEmbedding(filePath: string): Promise<EmbeddingData | null> {
     const embeddingPath = filePath.replace(/\.md$/, '.embedding');
-    
+
     try {
       const content = await fs.readFile(embeddingPath, 'utf8');
       return JSON.parse(content);
     } catch (error) {
-      if ((error as any)?.code === 'ENOENT') {
+      if ((error as NodeJS.ErrnoException).code === 'ENOENT') {
         return null; // File doesn't exist
       }
       throw error;
@@ -110,12 +110,12 @@ export class EmbeddingService {
   extractSearchableText(markdownContent: string): { text: string; sections: string[] } {
     // Remove YAML frontmatter
     const withoutFrontmatter = markdownContent.replace(/^---\n.*?\n---\n/s, '');
-    
+
     // Extract sections
     const sections: string[] = [];
     const sectionMatches = withoutFrontmatter.match(/^## (.+)$/gm);
     if (sectionMatches) {
-      sections.push(...sectionMatches.map(match => match.replace('## ', '')));
+      sections.push(...sectionMatches.map((match) => match.replace('## ', '')));
     }
 
     // Clean up markdown for embedding
@@ -126,7 +126,7 @@ export class EmbeddingService {
 
     return {
       text: cleanText,
-      sections
+      sections,
     };
   }
 }

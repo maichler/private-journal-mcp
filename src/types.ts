@@ -1,5 +1,5 @@
 // ABOUTME: Type definitions for the private journal MCP server
-// ABOUTME: Defines interfaces for journal entries and configuration
+// ABOUTME: Defines interfaces for journal entries and requests
 
 export interface JournalEntry {
   content: string;
@@ -7,15 +7,8 @@ export interface JournalEntry {
   filePath: string;
 }
 
-export interface ServerConfig {
-  journalPath: string;
-}
-
-export interface ProcessFeelingsRequest {
-  diary_entry: string;
-}
-
 export interface ProcessThoughtsRequest {
+  content?: string;
   feelings?: string;
   project_notes?: string;
   user_context?: string;
