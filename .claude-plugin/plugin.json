@@ -1,0 +1,16 @@
+{
+  "name": "journal",
+  "description": "Private journaling and semantic search for Claude - a space for processing thoughts, feelings, and insights",
+  "version": "1.0.0",
+  "author": {
+    "name": "Jesse Vincent",
+    "email": "jesse@fsck.com"
+  },
+  "mcpServers": {
+    "journal": {
+      "type": "stdio",
+      "command": "bun",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/dist/index.js"]
+    }
+  }
+}

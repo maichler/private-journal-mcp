@@ -6,3 +6,6 @@ coverage/
 .DS_Store
 .vscode/
 .idea/
+.worktrees/
+.private-journal/
+.claude/

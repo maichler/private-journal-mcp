@@ -1,12 +1,12 @@
 # Private Journal MCP Server
 
-A comprehensive MCP (Model Context Protocol) server that provides Claude with private journaling and semantic search capabilities for processing thoughts, feelings, and insights.
+A lightweight MCP (Model Context Protocol) server that provides Claude with private journaling and semantic search capabilities for processing thoughts, feelings, and insights.
 
 ## Features
 
 ### Journaling
 - **Multi-section journaling**: Separate categories for feelings, project notes, user context, technical insights, and world knowledge
-- **Dual storage**: Project notes stay with projects, personal thoughts in user home directory
+- **Freeform content**: Write unstructured thoughts when they don't fit categories
 - **Timestamped entries**: Each entry automatically dated with microsecond precision
 - **YAML frontmatter**: Structured metadata for each entry
 
@@ -16,10 +16,9 @@ A comprehensive MCP (Model Context Protocol) server that provides Claude with pr
 - **Local AI processing**: Uses @xenova/transformers - no external API calls required
 - **Automatic indexing**: Embeddings generated for all entries on startup and ongoing
 
-### Privacy & Performance
+### Privacy
 - **Completely private**: All processing happens locally, no data leaves your machine
-- **Fast operation**: Optimized file structure and in-memory similarity calculations
-- **Robust fallbacks**: Intelligent path resolution across platforms
+- **Single storage location**: Everything in `~/.private-journal/`
 
 ## Installation
 
@@ -46,16 +45,13 @@ Add to your MCP settings (e.g., Claude Desktop configuration):
 }
 ```
 
-The server will automatically find a suitable location for the journal files.
-
 ## MCP Tools
 
-The server provides comprehensive journaling and search capabilities:
-
 ### `process_thoughts`
-Multi-section private journaling with these optional categories:
+Multi-section private journaling with these optional fields:
+- **content**: Freeform journal content for unstructured thoughts
 - **feelings**: Private emotional processing space
-- **project_notes**: Technical insights specific to current project  
+- **project_notes**: Technical insights specific to current project
 - **user_context**: Notes about collaborating with humans
 - **technical_insights**: General software engineering learnings
 - **world_knowledge**: Domain knowledge and interesting discoveries
@@ -64,7 +60,6 @@ Multi-section private journaling with these optional categories:
 Semantic search across all journal entries:
 - **query** (required): Natural language search query
 - **limit**: Maximum results (default: 10)
-- **type**: Search scope - 'project', 'user', or 'both' (default: 'both')
 - **sections**: Filter by specific categories
 
 ### `read_journal_entry`
@@ -74,26 +69,15 @@ Read full content of specific entries:
 ### `list_recent_entries`
 Browse recent entries chronologically:
 - **limit**: Maximum entries (default: 10)
-- **type**: Entry scope - 'project', 'user', or 'both' (default: 'both')
 - **days**: Days back to search (default: 30)
 
 ## File Structure
 
-### Project Journal (per project)
-```
-.private-journal/
-├── 2025-05-31/
-│   ├── 14-30-45-123456.md          # Project notes entry
-│   ├── 14-30-45-123456.embedding   # Search index
-│   └── ...
-```
-
-### User Journal (global)
 ```
 ~/.private-journal/
 ├── 2025-05-31/
-│   ├── 14-32-15-789012.md          # Personal thoughts entry
-│   ├── 14-32-15-789012.embedding   # Search index
+│   ├── 14-30-45-123456.md          # Journal entry
+│   ├── 14-30-45-123456.embedding   # Search index
 │   └── ...
 ```
 
@@ -118,39 +102,11 @@ Vector embeddings provide semantic understanding...
 
 ## Development
 
-### Building
-
 ```bash
-npm run build
+bun run build    # Build with tsc
+bun test         # Run tests
+bun run dev      # Development mode
 ```
-
-### Testing
-
-```bash
-npm test
-```
-
-### Development Mode
-
-```bash
-npm run dev
-```
-
-### Improving Claude's Performance
-
-To help Claude learn and improve over time, consider adding journal usage guidance to your `~/.claude/CLAUDE.md` file:
-
-```markdown
-## Learning and Memory Management
-
-- YOU MUST use the journal tool frequently to capture technical insights, failed approaches, and user preferences
-- Before starting complex tasks, search the journal for relevant past experiences and lessons learned
-- Document architectural decisions and their outcomes for future reference
-- Track patterns in user feedback to improve collaboration over time
-- When you notice something that should be fixed but is unrelated to your current task, document it in your journal rather than fixing it immediately
-```
-
-This enables Claude to build persistent memory across conversations, leading to better engineering decisions and collaboration patterns.
 
 ## Author
 
